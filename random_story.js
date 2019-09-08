@@ -6,6 +6,7 @@ var fs = require('fs');
 var request = require('request');
 var htmlparser = require('htmlparser');
 var configFilename = './rss_feeds.txt';
+var result;
 
 function checkForRSSFile () {
   fs.exists( configFilename, function( exists) {
@@ -21,7 +22,7 @@ function readRSSFile( configFilename ) {
     if (err) return next( err );
     feedList = feedList
       .toString()
-      .replace( /~\s+!\s+$/g, '')
+      .replace( /^\s+|\s+$/g, '')   // 先頭・末尾の空白・タブを取り除く
       .split("\n");
     var random = Math.floor(Math.random() * feedList.length );
 
